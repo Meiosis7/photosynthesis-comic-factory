@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>漫画风光合作用工厂</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="scene" aria-label="漫画风光合作用工厂交互模型" data-step="0">
+        <div class="model-layer">
+          <img class="map" src="./assets/chloroplast-map.png" alt="漫画风叶绿体工厂地图" />
+
+        <div class="map-label light-label">
+          <img src="./assets/label-plaque.png" alt="" />
+          <span>类囊体薄膜</span>
+        </div>
+        <div class="map-label dark-label">
+          <img src="./assets/label-plaque.png" alt="" />
+          <span>叶绿体基质</span>
+        </div>
+
+        <svg class="transport-flow" viewBox="0 0 420 150" aria-hidden="true">
+          <defs>
+            <marker id="transportArrow" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M2 2 L14 8 L2 14 Z"></path>
+            </marker>
+          </defs>
+          <path class="transport-line transport-forward" d="M54 45 H366" marker-end="url(#transportArrow)" />
+          <path class="transport-line transport-return" d="M366 110 H54" />
+        </svg>
+        <svg class="light-flow" viewBox="0 0 260 180" aria-hidden="true">
+          <defs>
+            <marker id="lightArrow" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M2 2 L14 8 L2 14 Z"></path>
+            </marker>
+          </defs>
+          <path class="light-line water-in-flow" d="M24 132 C62 112 92 98 126 86" marker-end="url(#lightArrow)" />
+          <path class="light-line oxygen-out-flow" d="M158 66 C188 44 212 32 238 24" marker-end="url(#lightArrow)" />
+        </svg>
+        <img class="asset sun" src="./assets/sun.png" alt="太阳" />
+        <img class="asset granum" src="./assets/granum.png" alt="基粒和类囊体" />
+        <img class="asset water-split-arrow" src="./assets/water-split-arrow.png" alt="水的光解方向箭头" />
+        <img class="asset nadph-nadp-loop-arrow" src="./assets/nadph-nadp-loop-arrow.png" alt="NADPH 和 NADP+ 转换方向箭头" />
+        <img class="asset atp-adp-loop-arrow" src="./assets/nadph-nadp-loop-arrow.png" alt="ATP 和 ADP+Pi 转换方向箭头" />
+        <img class="asset nadph-nadp-loop-arrow-right" src="./assets/nadph-nadp-loop-arrow-blue.png" alt="NADPH 和 NADP+ 右侧返回箭头" />
+        <img class="asset atp-adp-loop-arrow-right" src="./assets/nadph-nadp-loop-arrow-blue.png" alt="ATP 和 ADP+Pi 右侧返回箭头" />
+        <img class="asset calvin-blue-curve" src="./assets/calvin-cycle-blue-fork.png" alt="暗反应循环分叉方向箭头" />
+        <img class="asset c5-c3-arc-arrow" src="./assets/c5-c3-arc-arrow.png" alt="C5 到 2C3 的圆弧箭头" />
+        <img class="asset water" src="./assets/water.png" alt="水" />
+        <img class="asset oxygen" src="./assets/oxygen.png" alt="氧气" />
+        <div class="energy-token atp" aria-label="ATP">ATP</div>
+        <div class="energy-token nadph" aria-label="NADPH">NADPH</div>
+        <img class="asset co2" src="./assets/co2.png" alt="二氧化碳" />
+        <img class="asset co2-down-left-arrow" src="./assets/co2-down-left-arrow.png" alt="" aria-hidden="true" />
+        <img class="asset c3" src="./assets/c3.png" alt="2C3" />
+        <img class="asset c5" src="./assets/c5.png" alt="C5" />
+        <div class="product-token sugar" aria-label="CH2O">(CH₂O)</div>
+        <div class="energy-token adp-pi" aria-label="ADP和Pi">ADP+Pi</div>
+        <div class="energy-token nadp" aria-label="NADP加">NADP⁺</div>
+
+        <span class="molecule-tag water-tag">H₂O</span>
+        <span class="molecule-tag oxygen-tag">O₂</span>
+        <span class="molecule-tag proton-electron-tag">2H⁺+2e⁻</span>
+        <span class="molecule-tag co2-tag">CO₂</span>
+        <span class="molecule-tag c3-tag">2C₃</span>
+        <span class="molecule-tag c5-tag">C₅</span>
+
+        <svg class="calvin-cycle" viewBox="0 0 360 250" aria-hidden="true">
+          <defs>
+            <marker id="cycleArrow" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M2 2 L14 8 L2 14 Z"></path>
+            </marker>
+            <marker id="cycleOutputArrow" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M2 2 L14 8 L2 14 Z"></path>
+            </marker>
+          </defs>
+          <path class="cycle-line cycle-input" d="M286 38 C268 52 246 70 228 80" />
+          <path class="cycle-line cycle-fixation" d="M270 112 C224 78 168 62 96 80" marker-end="url(#cycleArrow)" />
+          <path class="cycle-line cycle-descent" d="M92 98 C48 140 68 210 174 216" />
+          <path class="cycle-line cycle-regeneration" d="M174 216 C236 214 266 174 270 136" marker-end="url(#cycleArrow)" />
+        </svg>
+        <svg class="sugar-output-flow" viewBox="0 0 360 250" aria-hidden="true">
+          <defs>
+            <marker id="sceneOutputArrow" markerWidth="6.5" markerHeight="6.5" refX="5.7" refY="3.25" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M.8 .8 L5.7 3.25 L.8 5.7 Z"></path>
+            </marker>
+          </defs>
+          <path class="cycle-line cycle-output" d="M174 216 C176 230 178 252 179 269" marker-end="url(#sceneOutputArrow)" />
+          <path class="cycle-line cycle-output-mobile output-mobile" d="M174 216 C204 198 232 158 256 138" marker-end="url(#sceneOutputArrow)" />
+          <path class="cycle-line cycle-output cycle-output-narrow output-narrow" d="M174 216 C188 205 212 184 226 168" marker-end="url(#sceneOutputArrow)" />
+        </svg>
+        <button type="button" class="step-marker marker-light" data-hotspot="0" aria-label="点击光反应">
+          <img src="./assets/step-badge.png" alt="" />
+          <span>1</span>
+        </button>
+        <button type="button" class="step-marker marker-water" data-hotspot="1" aria-label="点击水的光解">
+          <img src="./assets/step-badge.png" alt="" />
+          <span>2</span>
+        </button>
+        <button type="button" class="step-marker marker-atp" data-hotspot="2" aria-label="点击 ATP 的形成">
+          <img src="./assets/step-badge.png" alt="" />
+          <span>3</span>
+        </button>
+        <button type="button" class="step-marker marker-nadph" data-hotspot="3" aria-label="点击 NADPH 的形成">
+          <img src="./assets/step-badge.png" alt="" />
+          <span>4</span>
+        </button>
+        <button type="button" class="step-marker marker-co2" data-hotspot="4" aria-label="点击二氧化碳固定">
+          <img src="./assets/step-badge.png" alt="" />
+          <span>5</span>
+        </button>
+        <button type="button" class="step-marker marker-c3" data-hotspot="5" aria-label="点击 C3 的还原">
+          <img src="./assets/step-badge.png" alt="" />
+          <span>6</span>
+        </button>
+        <button type="button" class="step-marker marker-return" data-hotspot="6" aria-label="点击 NADP+ 和 ADP Pi 返回光反应">
+          <img src="./assets/step-badge.png" alt="" />
+          <span>7</span>
+        </button>
+        </div>
+
+        <header class="topbar">
+          <div>
+            <p>高中生物 · 光合作用</p>
+            <h1>叶绿体里的能量工厂</h1>
+          </div>
+          <span id="stageBadge">1 / 7</span>
+        </header>
+
+        <aside class="explain" aria-live="polite">
+          <div class="kicker" id="stepPlace">类囊体薄膜</div>
+          <span class="step-index" id="stepIndex">第 1 步 / 7</span>
+          <h2 id="stepTitle">光反应启动</h2>
+          <p id="stepText">光合色素吸收光能，启动光反应。</p>
+          <p class="formula-row is-empty" id="stepFormula"></p>
+          <div class="learning-cue">
+            <b>探索目标</b>
+            <span id="taskText">点亮第 1 个节点：光反应。</span>
+          </div>
+          <div class="feedback" id="feedbackText">按模型中的编号顺序点亮节点。点亮后进入下一步。</div>
+          <dl>
+            <div><dt>场所</dt><dd id="stepLocation">类囊体薄膜</dd></div>
+            <div><dt>物质变化</dt><dd id="stepMatter">光能进入光反应系统</dd></div>
+            <div><dt>能量变化</dt><dd id="stepEnergy">光能开始转化</dd></div>
+            <div><dt>去向</dt><dd id="stepDest">进入水的光解和能量载体形成</dd></div>
+          </dl>
+        </aside>
+
+        <nav class="controls" aria-label="动画控制">
+          <button id="backBtn" type="button" title="上一步">←</button>
+          <button id="playBtn" type="button">演示</button>
+          <button id="nextBtn" type="button" title="下一步">→</button>
+          <button id="resetBtn" type="button">重播</button>
+        </nav>
+
+        <div class="steps" id="steps" aria-label="阶段选择"></div>
+      </section>
+    </main>
+    <script src="./src/app.js"></script>
+  </body>
+</html>
