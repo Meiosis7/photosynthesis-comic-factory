@@ -61,6 +61,80 @@ button {
   opacity: .3;
 }
 
+.info-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 34;
+  background: rgba(34, 43, 53, .18);
+  backdrop-filter: blur(2px);
+}
+
+.info-dialog {
+  position: absolute;
+  z-index: 35;
+  left: 50%;
+  top: 50%;
+  width: min(380px, calc(100% - 56px));
+  padding: 20px 22px 22px;
+  border: 5px solid #222b35;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 16% 14%, rgba(255, 255, 255, .48), transparent 25%),
+    linear-gradient(135deg, #fff7d7, #ffd783);
+  box-shadow: 10px 10px 0 rgba(34, 43, 53, .22), 0 20px 54px rgba(34, 43, 53, .26);
+  transform: translate(-50%, -50%);
+}
+
+.info-dialog h2 {
+  margin: 4px 36px 10px 0;
+  font-size: 28px;
+  line-height: 1.05;
+}
+
+.info-dialog p {
+  margin: 0;
+}
+
+.info-kicker {
+  color: #9b2f50;
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.info-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 3px solid #222b35;
+  border-radius: 50%;
+  background: #fff5d7;
+  box-shadow: 3px 3px 0 rgba(34, 43, 53, .18);
+  font-size: 24px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+#moleculeInfoText {
+  color: #25313c;
+  font-size: 17px;
+  font-weight: 750;
+  line-height: 1.55;
+}
+
+.info-hotspot {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.info-hotspot:focus-visible {
+  outline: 4px solid rgba(255, 222, 79, .92);
+  outline-offset: 4px;
+}
+
 .model-layer {
   display: contents;
 }
@@ -108,6 +182,14 @@ button {
     drop-shadow(4px 5px 0 rgba(35, 43, 52, .18))
     drop-shadow(10px 16px 8px rgba(35, 43, 52, .24));
   transition: opacity 180ms ease, transform 220ms ease, filter 220ms ease;
+}
+
+.asset.info-hotspot,
+.energy-token.info-hotspot,
+.product-token.info-hotspot,
+.molecule-tag.info-hotspot {
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .asset { z-index: 6; }
@@ -419,14 +501,32 @@ h1 {
 }
 
 #stageBadge {
+  position: relative;
   margin-left: auto;
-  min-width: 72px;
-  padding: 9px 12px;
-  border: 4px solid #222b35;
-  background: var(--amber);
+  min-width: 0;
+  padding: 10px 16px 10px 22px;
+  border: 3px solid #222b35;
+  border-radius: 5px;
+  background: linear-gradient(90deg, rgba(67, 191, 168, .24), rgba(255, 245, 215, .95) 38%, rgba(255, 245, 215, .95));
+  color: #22303c;
+  box-shadow: 5px 5px 0 rgba(34, 43, 53, .18);
   text-align: center;
   font-weight: 900;
+  text-shadow: 1px 1px 0 #fff0b8;
+  white-space: nowrap;
   pointer-events: auto;
+}
+
+#stageBadge::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 7px;
+  bottom: 7px;
+  width: 5px;
+  border-radius: 3px;
+  background: #43bfa8;
+  box-shadow: 2px 0 0 rgba(34, 43, 53, .16);
 }
 
 .explain {
@@ -434,8 +534,8 @@ h1 {
   z-index: 12;
   left: 42px;
   bottom: 84px;
-  width: min(470px, calc(100% - 84px));
-  padding: 10px 12px;
+  width: min(620px, calc(100% - 84px));
+  padding: 16px 18px;
   border: 5px solid #222b35;
   background: rgba(255, 245, 215, .76);
   box-shadow: 8px 8px 0 rgba(34, 43, 53, .18);
@@ -443,7 +543,7 @@ h1 {
 
 .kicker {
   color: #267c71;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 900;
 }
 
@@ -451,32 +551,32 @@ h1 {
   display: inline-block;
   margin-top: 3px;
   color: #9b2f50;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 950;
 }
 
 h2 {
-  margin: 4px 0 6px;
-  font-size: 22px;
+  margin: 6px 0 8px;
+  font-size: 32px;
   line-height: 1.1;
 }
 
 .explain p {
   margin: 0;
   line-height: 1.28;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 650;
 }
 
-.formula-row {
-  margin-top: 10px;
-  padding: 7px 9px;
+.explain .formula-row {
+  margin-top: 12px;
+  padding: 10px 12px;
   border: 3px solid #222b35;
   background: rgba(255, 255, 255, .42);
   box-shadow: 3px 3px 0 rgba(34, 43, 53, .14);
   color: #22303c;
   text-align: center;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 950;
 }
 
@@ -502,8 +602,8 @@ h2 {
 .condition-arrow {
   display: inline-grid;
   grid-template-rows: auto 9px;
-  min-width: 120px;
-  margin: 0 8px;
+  min-width: 150px;
+  margin: 0 10px;
   vertical-align: middle;
   color: #22303c;
   font-size: .72em;
@@ -664,32 +764,6 @@ dd {
 .steps button.complete {
   color: #17382f;
   background: #b9f2c9;
-}
-
-.steps button.dark-step {
-  color: #fff8db;
-  background:
-    radial-gradient(circle at 20% 18%, rgba(255,255,255,.18), transparent 24%),
-    linear-gradient(135deg, #1f2c38, #101821);
-  border-color: #101821;
-  text-shadow: 1px 2px 0 rgba(0, 0, 0, .45);
-}
-
-.steps button.dark-step.complete {
-  color: #fff8db;
-  background:
-    radial-gradient(circle at 20% 18%, rgba(255,255,255,.16), transparent 24%),
-    linear-gradient(135deg, #334250, #18212b);
-}
-
-.steps button.dark-step.active {
-  color: #ffffff;
-  background:
-    radial-gradient(circle at 22% 18%, rgba(255,255,255,.28), transparent 24%),
-    linear-gradient(135deg, #3b4b5a, #111923);
-  box-shadow:
-    4px 4px 0 rgba(34, 43, 53, .24),
-    inset 0 0 0 3px rgba(255, 245, 215, .24);
 }
 
 .step-marker.is-current {
@@ -1297,7 +1371,7 @@ dd {
     drop-shadow(0 0 5px rgba(91, 177, 205, .24));
 }
 .model-layer .water { left: 21.5%; top: 20%; width: 7.2%; }
-.model-layer .oxygen { left: 39.6%; top: 29%; width: 7.2%; }
+.model-layer .oxygen { left: 39.6%; top: 23.2%; width: 7.2%; }
 .model-layer .atp { left: 46.4%; top: 55.4%; right: auto; width: 8.6%; min-width: 0; }
 .model-layer .nadph { left: 46.4%; top: 37.8%; right: auto; width: 8.6%; min-width: 0; }
 .model-layer .adp-pi { left: 46.4%; top: 64.2%; right: auto; width: 8.6%; min-width: 0; }
@@ -1313,7 +1387,7 @@ dd {
 }
 .model-layer .c3 { left: 61.5%; top: 29.5%; right: auto; width: 7.2%; }
 .model-layer .c5 { left: 76.5%; top: 48.5%; right: auto; width: 6.2%; }
-.model-layer .sugar { left: 82.4%; top: 65%; right: auto; width: 8.6%; min-width: 0; }
+.model-layer .sugar { left: 82.4%; top: 66%; right: auto; width: 8.6%; min-width: 0; }
 
 .model-layer .light-label { left: 22.8%; top: 68.5%; right: auto; width: 17%; height: 12%; }
 .model-layer .dark-label { left: 60.2%; top: 68.5%; right: auto; width: 17%; height: 12%; }
@@ -1441,5 +1515,193 @@ dd {
 @media (max-width: 760px), (max-height: 560px) {
   .model-layer {
     width: min(100%, 760px);
+  }
+}
+
+@media (max-width: 1100px), (orientation: portrait) {
+  .app {
+    padding: 8px;
+  }
+
+  .scene {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    aspect-ratio: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto minmax(42px, 1fr);
+    gap: 10px;
+    align-content: stretch;
+    padding: 14px;
+  }
+
+  .topbar {
+    position: relative;
+    display: flex;
+    grid-row: 1;
+    grid-column: 1 / -1;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    align-items: center;
+    gap: 12px;
+    pointer-events: none;
+  }
+
+  .topbar p {
+    margin-bottom: 4px;
+    font-size: 16px;
+  }
+
+  .topbar h1 {
+    font-size: 34px;
+    line-height: 1;
+  }
+
+  #stageBadge {
+    min-width: 0;
+    padding: 9px 14px 9px 20px;
+    border-width: 3px;
+    font-size: 18px;
+  }
+
+  .explain {
+    position: relative;
+    grid-row: 2;
+    grid-column: 1 / -1;
+    left: auto;
+    bottom: auto;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    padding: 8px 10px;
+  }
+
+  .explain .kicker {
+    font-size: 13px;
+  }
+
+  .explain .step-index {
+    font-size: 11px;
+  }
+
+  .explain h2 {
+    margin: 3px 0 5px;
+    font-size: 21px;
+  }
+
+  .explain p {
+    font-size: 13px;
+    line-height: 1.24;
+  }
+
+  .explain .formula-row {
+    margin-top: 7px;
+    padding: 5px 7px;
+    font-size: 14px;
+  }
+
+  .model-layer {
+    position: relative;
+    grid-row: 3;
+    grid-column: 1 / -1;
+    left: auto;
+    top: auto;
+    align-self: center;
+    justify-self: center;
+    width: min(100%, calc((100dvh - 340px) * 1.7779), 1100px);
+    min-width: min(100%, 320px);
+    height: auto;
+    transform: none;
+  }
+
+  .steps {
+    position: relative;
+    grid-row: 4;
+    grid-column: 1 / -1;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .steps button {
+    min-width: 0;
+    min-height: 42px;
+    padding: 0 4px;
+    white-space: normal;
+    text-overflow: clip;
+    font-size: 13px;
+    line-height: 1.08;
+  }
+
+  .controls {
+    position: relative;
+    grid-row: 5;
+    grid-column: 1 / -1;
+    right: auto;
+    bottom: auto;
+    align-self: end;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .controls button {
+    min-height: 42px;
+  }
+}
+
+@supports not (height: 100dvh) {
+  @media (max-width: 1100px), (orientation: portrait) {
+    .model-layer {
+      width: min(100%, calc((100vh - 340px) * 1.7779), 1100px);
+    }
+  }
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .scene {
+    grid-template-rows: auto auto minmax(220px, 1fr) auto auto;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .topbar h1 {
+    font-size: 28px;
+  }
+
+  .topbar p {
+    font-size: 13px;
+  }
+
+  #stageBadge {
+    padding: 7px 10px 7px 18px;
+    font-size: 14px;
+  }
+
+  .model-layer {
+    width: min(100%, calc((100dvh - 390px) * 1.7779), 760px);
+    min-width: 0;
+  }
+
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .controls {
+    justify-content: space-between;
+  }
+}
+
+@supports not (height: 100dvh) {
+  @media (max-width: 760px) and (orientation: portrait) {
+    .model-layer {
+      width: min(100%, calc((100vh - 390px) * 1.7779), 760px);
+    }
   }
 }

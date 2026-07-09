@@ -78,6 +78,64 @@ const steps = [
   }
 ];
 
+const moleculeInfo = {
+  water: {
+    title: 'H₂O 水',
+    type: '光反应原料',
+    text: '水在类囊体薄膜上被光解，产生 O₂、H⁺ 和 e⁻。H⁺ 和 e⁻ 会继续参与 NADPH 的形成。'
+  },
+  oxygen: {
+    title: 'O₂ 氧气',
+    type: '光反应产物',
+    text: '氧气来自水的光解，是光反应释放出的产物，会从叶绿体中扩散出去。'
+  },
+  protonElectron: {
+    title: 'H⁺ + e⁻',
+    type: '还原力来源',
+    text: 'H⁺ 和 e⁻ 来自水的光解，会被 NADP⁺ 接收，用来形成 NADPH。'
+  },
+  atp: {
+    title: 'ATP',
+    type: '能量载体',
+    text: 'ATP 是光反应形成的直接能源物质，会进入暗反应，为 C₃ 的还原提供能量。'
+  },
+  nadph: {
+    title: 'NADPH',
+    type: '还原型辅酶II',
+    text: 'NADPH 是还原型辅酶II，作为还原剂，在暗反应中为 C₃ 的还原提供氢、还原力和能量。'
+  },
+  co2: {
+    title: 'CO₂ 二氧化碳',
+    type: '暗反应原料',
+    text: 'CO₂ 进入叶绿体基质，与 C₅ 结合并被固定，形成 2C₃。'
+  },
+  c3: {
+    title: '2C₃',
+    type: '三碳化合物',
+    text: 'C₃ 是三碳化合物，是 CO₂ 固定后的产物，会利用 ATP 和 NADPH 被还原，形成糖类并促进 C₅ 再生。'
+  },
+  c5: {
+    title: 'C₅',
+    type: '五碳化合物',
+    text: 'C₅ 是五碳化合物，可以接受 CO₂，参与 CO₂ 的固定。暗反应过程中 C₅ 会不断再生，维持循环。'
+  },
+  sugar: {
+    title: '(CH₂O)',
+    type: '糖类产物',
+    text: '(CH₂O) 表示光合作用形成的糖类，是暗反应把 CO₂ 还原后生成的有机物。'
+  },
+  adpPi: {
+    title: 'ADP + Pi',
+    type: '返回光反应',
+    text: '暗反应消耗 ATP 后产生 ADP 和 Pi，它们返回类囊体薄膜，等待下一轮合成 ATP。'
+  },
+  nadp: {
+    title: 'NADP⁺',
+    type: '返回光反应',
+    text: 'NADP⁺ 是 NADPH 被消耗后的形式，会回到光反应，重新接收 H⁺ 和 e⁻。'
+  }
+};
+
 const scene = document.querySelector('.scene');
 const stepsEl = document.querySelector('#steps');
 const playBtn = document.querySelector('#playBtn');
@@ -97,15 +155,21 @@ const fields = {
   energy: document.querySelector('#stepEnergy'),
   dest: document.querySelector('#stepDest')
 };
+const infoDialog = document.querySelector('#moleculeInfoDialog');
+const infoBackdrop = document.querySelector('#moleculeInfoBackdrop');
+const infoClose = document.querySelector('#moleculeInfoClose');
+const infoTitle = document.querySelector('#moleculeInfoTitle');
+const infoType = document.querySelector('#moleculeInfoType');
+const infoText = document.querySelector('#moleculeInfoText');
 
 let index = 0;
 let demoTimer = 0;
+let lastInfoTrigger = null;
 
 steps.forEach((step, stepIndex) => {
   const button = document.createElement('button');
   button.type = 'button';
   button.textContent = step.short;
-  button.classList.toggle('dark-step', stepIndex >= 4);
   button.addEventListener('click', () => setStep(stepIndex));
   stepsEl.append(button);
 });
@@ -126,7 +190,24 @@ resetBtn.addEventListener('click', () => {
   setStep(0);
 });
 
+document.querySelectorAll('[data-info-key]').forEach((element) => {
+  element.addEventListener('click', () => openMoleculeInfo(element.dataset.infoKey, element));
+  element.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openMoleculeInfo(element.dataset.infoKey, element);
+    }
+  });
+});
+
+infoClose.addEventListener('click', closeMoleculeInfo);
+infoBackdrop.addEventListener('click', closeMoleculeInfo);
+
 window.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !infoDialog.hidden) {
+    closeMoleculeInfo();
+    return;
+  }
   if (event.key === 'ArrowRight') setStep(index + 1);
   if (event.key === 'ArrowLeft') setStep(index - 1);
   if (event.key === ' ') {
@@ -143,7 +224,6 @@ function setStep(next) {
 function render() {
   const step = steps[index];
   scene.dataset.step = String(index);
-  fields.badge.textContent = `${index + 1} / ${steps.length}`;
   fields.index.textContent = `第 ${index + 1} 步 / ${steps.length}`;
   fields.title.textContent = step.title;
   fields.text.innerHTML = step.text;
@@ -171,6 +251,28 @@ function render() {
     node.classList.toggle('is-locked', false);
     node.setAttribute('aria-current', nodeIndex === index ? 'step' : 'false');
   });
+}
+
+function openMoleculeInfo(key, trigger) {
+  const info = moleculeInfo[key];
+  if (!info) return;
+
+  lastInfoTrigger = trigger;
+  infoTitle.textContent = info.title;
+  infoType.textContent = info.type;
+  infoText.textContent = info.text;
+  infoDialog.hidden = false;
+  infoBackdrop.hidden = false;
+  infoClose.focus();
+}
+
+function closeMoleculeInfo() {
+  infoDialog.hidden = true;
+  infoBackdrop.hidden = true;
+  if (lastInfoTrigger) {
+    lastInfoTrigger.focus();
+    lastInfoTrigger = null;
+  }
 }
 
 function startDemo() {

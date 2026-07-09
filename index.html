@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>漫画风光合作用工厂</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=topbar-badge-2" />
   </head>
   <body>
     <main class="app">
@@ -48,24 +48,24 @@
         <img class="asset atp-adp-loop-arrow-right" src="./assets/nadph-nadp-loop-arrow-blue.png" alt="ATP 和 ADP+Pi 右侧返回箭头" />
         <img class="asset calvin-blue-curve" src="./assets/calvin-cycle-blue-fork.png" alt="暗反应循环分叉方向箭头" />
         <img class="asset c5-c3-arc-arrow" src="./assets/c5-c3-arc-arrow.png" alt="C5 到 2C3 的圆弧箭头" />
-        <img class="asset water" src="./assets/water.png" alt="水" />
-        <img class="asset oxygen" src="./assets/oxygen.png" alt="氧气" />
-        <div class="energy-token atp" aria-label="ATP">ATP</div>
-        <div class="energy-token nadph" aria-label="NADPH">NADPH</div>
-        <img class="asset co2" src="./assets/co2.png" alt="二氧化碳" />
+        <img class="asset water info-hotspot" src="./assets/water.png" alt="水" role="button" tabindex="0" data-info-key="water" />
+        <img class="asset oxygen info-hotspot" src="./assets/oxygen.png" alt="氧气" role="button" tabindex="0" data-info-key="oxygen" />
+        <div class="energy-token atp info-hotspot" aria-label="ATP" role="button" tabindex="0" data-info-key="atp">ATP</div>
+        <div class="energy-token nadph info-hotspot" aria-label="NADPH" role="button" tabindex="0" data-info-key="nadph">NADPH</div>
+        <img class="asset co2 info-hotspot" src="./assets/co2.png" alt="二氧化碳" role="button" tabindex="0" data-info-key="co2" />
         <img class="asset co2-down-left-arrow" src="./assets/co2-down-left-arrow.png" alt="" aria-hidden="true" />
-        <img class="asset c3" src="./assets/c3.png" alt="2C3" />
-        <img class="asset c5" src="./assets/c5.png" alt="C5" />
-        <div class="product-token sugar" aria-label="CH2O">(CH₂O)</div>
-        <div class="energy-token adp-pi" aria-label="ADP和Pi">ADP+Pi</div>
-        <div class="energy-token nadp" aria-label="NADP加">NADP⁺</div>
+        <img class="asset c3 info-hotspot" src="./assets/c3.png" alt="2C3" role="button" tabindex="0" data-info-key="c3" />
+        <img class="asset c5 info-hotspot" src="./assets/c5.png" alt="C5" role="button" tabindex="0" data-info-key="c5" />
+        <div class="product-token sugar info-hotspot" aria-label="CH2O" role="button" tabindex="0" data-info-key="sugar">(CH₂O)</div>
+        <div class="energy-token adp-pi info-hotspot" aria-label="ADP和Pi" role="button" tabindex="0" data-info-key="adpPi">ADP+Pi</div>
+        <div class="energy-token nadp info-hotspot" aria-label="NADP加" role="button" tabindex="0" data-info-key="nadp">NADP⁺</div>
 
-        <span class="molecule-tag water-tag">H₂O</span>
-        <span class="molecule-tag oxygen-tag">O₂</span>
-        <span class="molecule-tag proton-electron-tag">2H⁺+2e⁻</span>
-        <span class="molecule-tag co2-tag">CO₂</span>
-        <span class="molecule-tag c3-tag">2C₃</span>
-        <span class="molecule-tag c5-tag">C₅</span>
+        <span class="molecule-tag water-tag info-hotspot" role="button" tabindex="0" data-info-key="water">H₂O</span>
+        <span class="molecule-tag oxygen-tag info-hotspot" role="button" tabindex="0" data-info-key="oxygen">O₂</span>
+        <span class="molecule-tag proton-electron-tag info-hotspot" role="button" tabindex="0" data-info-key="protonElectron">2H⁺+2e⁻</span>
+        <span class="molecule-tag co2-tag info-hotspot" role="button" tabindex="0" data-info-key="co2">CO₂</span>
+        <span class="molecule-tag c3-tag info-hotspot" role="button" tabindex="0" data-info-key="c3">2C₃</span>
+        <span class="molecule-tag c5-tag info-hotspot" role="button" tabindex="0" data-info-key="c5">C₅</span>
 
         <svg class="calvin-cycle" viewBox="0 0 360 250" aria-hidden="true">
           <defs>
@@ -123,10 +123,10 @@
 
         <header class="topbar">
           <div>
-            <p>高中生物 · 光合作用</p>
+            <p>必修1·光合作用与能量转化</p>
             <h1>叶绿体里的能量工厂</h1>
           </div>
-          <span id="stageBadge">1 / 7</span>
+          <span id="stageBadge">一生儿·高中生物一本通</span>
         </header>
 
         <aside class="explain" aria-live="polite">
@@ -156,8 +156,15 @@
         </nav>
 
         <div class="steps" id="steps" aria-label="阶段选择"></div>
+        <div class="info-backdrop" id="moleculeInfoBackdrop" hidden></div>
+        <section class="info-dialog" id="moleculeInfoDialog" role="dialog" aria-modal="true" aria-labelledby="moleculeInfoTitle" aria-describedby="moleculeInfoText" hidden>
+          <button class="info-close" id="moleculeInfoClose" type="button" aria-label="关闭介绍">×</button>
+          <p class="info-kicker" id="moleculeInfoType">分子介绍</p>
+          <h2 id="moleculeInfoTitle">分子名称</h2>
+          <p id="moleculeInfoText">点击分子查看介绍。</p>
+        </section>
       </section>
     </main>
-    <script src="./src/app.js"></script>
+    <script src="./src/app.js?v=topbar-labels-1"></script>
   </body>
 </html>
