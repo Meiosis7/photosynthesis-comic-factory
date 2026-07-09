@@ -44,8 +44,8 @@ const stepTitles = [...stepsSource.matchAll(/title:\s*'([^']+)'/g)].map((match) 
 assert.deepEqual(stepTitles, [
   '光反应启动',
   '水的光解',
-  'ATP 的形成',
   'NADPH 的形成',
+  'ATP 的形成',
   'CO₂ 的固定',
   'C₃ 的还原',
   '物质返回光反应'
@@ -99,16 +99,59 @@ assert.match(js, /type:\s*'五碳化合物'/, 'C5 card should say 五碳化合�
 assert.doesNotMatch(js + css, /dark-step/, 'dark reaction step buttons should use the same styling as light reaction buttons');
 assert.match(html, />必修1·光合作用与能量转化</, 'topbar small title should use the required module label');
 assert.match(html, />一生儿·高中生物一本通</, 'topbar right badge should use the required brand label');
-assert.match(html, /styles\.css\?v=topbar-badge-2/, 'stylesheet URL should be cache-busted for redesigned topbar badge styling');
-assert.match(html, /src="\.\/src\/app\.js\?v=topbar-labels-1"/, 'script URL should be cache-busted for static topbar labels');
+assert.match(html, /styles\.css\?v=focus-layout-6/, 'stylesheet URL should be cache-busted for compact cards and focused step styling');
+assert.match(html, /src="\.\/src\/app\.js\?v=focus-order-1"/, 'script URL should be cache-busted for reordered steps');
 assert.match(css, /#stageBadge\s*\{[^}]*position:\s*relative;[^}]*padding:\s*10px 16px 10px 22px;[^}]*border:\s*3px solid #222b35;[^}]*border-radius:\s*5px;[^}]*linear-gradient\(90deg,\s*rgba\(67,\s*191,\s*168,\s*\.24\),\s*rgba\(255,\s*245,\s*215,\s*\.95\)\s*38%,\s*rgba\(255,\s*245,\s*215,\s*\.95\)\);[^}]*box-shadow:\s*5px 5px 0 rgba\(34,\s*43,\s*53,\s*\.18\);/s, 'topbar badge should use a paper-label comic style');
 assert.match(css, /#stageBadge::before\s*\{[^}]*background:\s*#43bfa8;/s, 'topbar badge should include the teal label stripe');
 assert.doesNotMatch(js, /fields\.badge\.textContent\s*=\s*`\$\{index \+ 1\} \\\/ \$\{steps\.length\}`/, 'topbar right badge should stay static instead of showing step progress');
+assert.match(css, /\.info-dialog\s*\{[^}]*width:\s*min\(220px,\s*calc\(100% - 40px\)\);[^}]*padding:\s*10px 12px 12px;[^}]*border:\s*3px solid #222b35;/s, 'molecule info dialog should be at least 50% more compact');
+assert.match(css, /#moleculeInfoText\s*\{[^}]*font-size:\s*12px;[^}]*line-height:\s*1\.42;/s, 'molecule info body text should shrink with the compact card');
+assert.match(css, /\.scene\[data-step\] \.model-layer :is\([\s\S]*?\.water-split-arrow[\s\S]*?\.co2-down-left-arrow[\s\S]*?\.nadp[\s\S]*?\)\s*\{[^}]*opacity:\s*\.28;/s, 'step focus should dim unrelated molecules and curves');
+assert.match(css, /\.scene\[data-step="1"\] \.model-layer :is\([\s\S]*?\.water-split-arrow[\s\S]*?\.water[\s\S]*?\.oxygen[\s\S]*?\)\s*\{[^}]*opacity:\s*1;/s, 'water photolysis step should highlight only related items');
+assert.match(css, /\.scene\[data-step="5"\] \.model-layer :is\([\s\S]*?\.c3[\s\S]*?\.sugar[\s\S]*?\.calvin-blue-curve[\s\S]*?\)\s*\{[^}]*opacity:\s*1;/s, 'C3 reduction step should highlight sugar production and Calvin curve');
+
+const focusItemsFor = (step) => {
+  const startToken = `.scene[data-step="${step}"] .model-layer :is(\n`;
+  const start = css.indexOf(startToken);
+  assert.notEqual(start, -1, `missing focus selector for step ${step}`);
+  const bodyStart = start + startToken.length;
+  const end = css.indexOf(step === 6 ? '\n) {' : '\n),', bodyStart);
+  assert.notEqual(end, -1, `missing focus selector end for step ${step}`);
+  return css.slice(bodyStart, end);
+};
+
+const nadphFocus = focusItemsFor(2);
+assert.match(nadphFocus, /\.nadph/, 'NADPH synthesis should be step 3 in the button order');
+assert.match(nadphFocus, /\.nadph-nadp-loop-arrow/, 'NADPH synthesis should highlight the left synthesis arrow');
+assert.doesNotMatch(nadphFocus, /right/, 'NADPH synthesis should leave the right return arrow dim');
+
+const atpFocus = focusItemsFor(3);
+assert.match(atpFocus, /\.atp/, 'ATP synthesis should come after NADPH synthesis');
+assert.match(atpFocus, /\.atp-adp-loop-arrow/, 'ATP synthesis should highlight the left synthesis arrow');
+assert.doesNotMatch(atpFocus, /right/, 'ATP synthesis should leave the right return arrow dim');
+
+const c3Focus = focusItemsFor(5);
+assert.match(c3Focus, /\.nadp/, 'C3 reduction should show NADP+');
+assert.match(c3Focus, /\.adp-pi/, 'C3 reduction should show ADP+Pi');
+assert.match(c3Focus, /\.nadph-nadp-loop-arrow-right/, 'C3 reduction should show the NADP+ return arrow');
+assert.match(c3Focus, /\.atp-adp-loop-arrow-right/, 'C3 reduction should show the ADP+Pi return arrow');
+assert.doesNotMatch(c3Focus, /\.c5-c3-arc-arrow/, 'C3 reduction should not highlight the C5 to C3 arrow');
+
+const returnFocus = focusItemsFor(6);
+assert.match(returnFocus, /\.nadp/, 'return step should keep NADP+ visible');
+assert.match(returnFocus, /\.adp-pi/, 'return step should keep ADP+Pi visible');
+assert.doesNotMatch(returnFocus, /arrow/, 'return step should not highlight any curve or arrow');
+
+const globalAnimation = [...css.matchAll(/([^{}]+)\{\s*animation:\s*stepFocusFlash 1\.5s ease-in-out infinite;\s*\}/g)]
+  .find((match) => match[1].includes('.scene[data-step] .model-layer :is('));
+assert.ok(globalAnimation, 'missing global focused-curve animation selector');
+assert.doesNotMatch(globalAnimation[1], /right/, 'return arrows should not be part of the global focused-curve animation');
 assert.match(css, /\.explain\s*\{[^}]*width:\s*min\(620px,\s*calc\(100% - 84px\)\);[^}]*padding:\s*16px 18px;/s, 'large-screen process card should be wider and roomier');
 assert.match(css, /h2\s*\{[^}]*font-size:\s*32px;/s, 'large-screen process card title should be larger');
 assert.match(css, /\.explain p\s*\{[^}]*font-size:\s*18px;/s, 'large-screen process card body should be larger');
 assert.match(css, /\.explain \.formula-row\s*\{[^}]*font-size:\s*20px;/s, 'large-screen process formula should be larger');
 assert.match(css, /@media \(max-width: 1100px\), \(orientation: portrait\)\s*\{[\s\S]*?\.scene\s*\{[^}]*grid-template-rows:\s*auto auto auto auto minmax\(42px,\s*1fr\);[\s\S]*?\.topbar\s*\{[^}]*display:\s*flex;[^}]*grid-row:\s*1;[\s\S]*?\.topbar h1\s*\{[^}]*font-size:\s*34px;[\s\S]*?\.explain\s*\{[^}]*grid-row:\s*2;[\s\S]*?\.model-layer\s*\{[^}]*grid-row:\s*3;[\s\S]*?\.steps\s*\{[^}]*grid-row:\s*4;[^}]*grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\);[\s\S]*?\.controls\s*\{[^}]*grid-row:\s*5;[^}]*align-self:\s*end;/s, 'portrait layout should keep the project title large and stack content without large empty gaps');
+assert.match(css, /@media \(max-width: 760px\) and \(orientation: portrait\)\s*\{[\s\S]*?\.model-layer\s*\{[^}]*width:\s*min\(112vw,\s*max\(104vw,\s*calc\(\(100dvh - 390px\) \* 1\.7779\)\),\s*900px\);[^}]*max-width:\s*none;/s, 'small portrait screens should scale the main model slightly beyond the viewport without clipping CH2O');
 
 for (const label of ['H₂O', 'O₂', 'CO₂', 'C₃', 'C₅', '(CH₂O)', 'ADP+Pi', 'NADP⁺']) {
   assert.match(html, new RegExp(label.replace(/[.+?^${}()|[\]\\]/g, '\\$&')), `missing molecule label: ${label}`);

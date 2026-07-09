@@ -74,21 +74,21 @@ button {
   z-index: 35;
   left: 50%;
   top: 50%;
-  width: min(380px, calc(100% - 56px));
-  padding: 20px 22px 22px;
-  border: 5px solid #222b35;
-  border-radius: 8px;
+  width: min(220px, calc(100% - 40px));
+  padding: 10px 12px 12px;
+  border: 3px solid #222b35;
+  border-radius: 6px;
   background:
     radial-gradient(circle at 16% 14%, rgba(255, 255, 255, .48), transparent 25%),
     linear-gradient(135deg, #fff7d7, #ffd783);
-  box-shadow: 10px 10px 0 rgba(34, 43, 53, .22), 0 20px 54px rgba(34, 43, 53, .26);
+  box-shadow: 5px 5px 0 rgba(34, 43, 53, .22), 0 12px 28px rgba(34, 43, 53, .24);
   transform: translate(-50%, -50%);
 }
 
 .info-dialog h2 {
-  margin: 4px 36px 10px 0;
-  font-size: 28px;
-  line-height: 1.05;
+  margin: 2px 28px 6px 0;
+  font-size: 18px;
+  line-height: 1.08;
 }
 
 .info-dialog p {
@@ -97,32 +97,32 @@ button {
 
 .info-kicker {
   color: #9b2f50;
-  font-size: 13px;
+  font-size: 10px;
   font-weight: 950;
 }
 
 .info-close {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 7px;
+  right: 7px;
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
-  border: 3px solid #222b35;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #222b35;
   border-radius: 50%;
   background: #fff5d7;
-  box-shadow: 3px 3px 0 rgba(34, 43, 53, .18);
-  font-size: 24px;
+  box-shadow: 2px 2px 0 rgba(34, 43, 53, .18);
+  font-size: 17px;
   font-weight: 950;
   line-height: 1;
 }
 
 #moleculeInfoText {
   color: #25313c;
-  font-size: 17px;
+  font-size: 12px;
   font-weight: 750;
-  line-height: 1.55;
+  line-height: 1.42;
 }
 
 .info-hotspot {
@@ -1489,6 +1489,123 @@ dd {
   transform: rotate(5deg);
 }
 
+.scene[data-step] .model-layer :is(
+  .sun,
+  .granum,
+  .water-split-arrow,
+  .nadph-nadp-loop-arrow,
+  .atp-adp-loop-arrow,
+  .nadph-nadp-loop-arrow-right,
+  .atp-adp-loop-arrow-right,
+  .calvin-blue-curve,
+  .c5-c3-arc-arrow,
+  .water,
+  .oxygen,
+  .water-tag,
+  .oxygen-tag,
+  .proton-electron-tag,
+  .atp,
+  .nadph,
+  .co2-down-left-arrow,
+  .co2,
+  .c5,
+  .co2-tag,
+  .c5-tag,
+  .c3,
+  .sugar,
+  .c3-tag,
+  .adp-pi,
+  .nadp
+) {
+  opacity: .28;
+  transition: opacity 260ms ease, filter 260ms ease;
+}
+
+.scene[data-step="0"] .model-layer :is(
+  .sun,
+  .granum,
+  .light-label
+),
+.scene[data-step="1"] .model-layer :is(
+  .water-split-arrow,
+  .water,
+  .oxygen,
+  .water-tag,
+  .oxygen-tag,
+  .proton-electron-tag,
+  .granum
+),
+.scene[data-step="2"] .model-layer :is(
+  .nadph,
+  .nadp,
+  .nadph-nadp-loop-arrow,
+  .proton-electron-tag,
+  .granum
+),
+.scene[data-step="3"] .model-layer :is(
+  .atp,
+  .adp-pi,
+  .atp-adp-loop-arrow,
+  .granum
+),
+.scene[data-step="4"] .model-layer :is(
+  .co2,
+  .co2-tag,
+  .co2-down-left-arrow,
+  .c5,
+  .c5-tag,
+  .c3,
+  .c3-tag,
+  .c5-c3-arc-arrow
+),
+.scene[data-step="5"] .model-layer :is(
+  .c3,
+  .c3-tag,
+  .sugar,
+  .atp,
+  .nadph,
+  .adp-pi,
+  .nadp,
+  .atp-adp-loop-arrow-right,
+  .nadph-nadp-loop-arrow-right,
+  .c5,
+  .c5-tag,
+  .calvin-blue-curve
+),
+.scene[data-step="6"] .model-layer :is(
+  .adp-pi,
+  .nadp,
+  .granum
+) {
+  opacity: 1;
+  filter:
+    drop-shadow(4px 5px 0 rgba(35, 43, 52, .18))
+    drop-shadow(0 0 10px rgba(242, 184, 75, .52));
+}
+
+.scene[data-step] .model-layer :is(
+  .water-split-arrow,
+  .calvin-blue-curve,
+  .co2-down-left-arrow,
+  .nadph-nadp-loop-arrow,
+  .atp-adp-loop-arrow,
+  .c5-c3-arc-arrow
+) {
+  animation: stepFocusFlash 1.5s ease-in-out infinite;
+}
+
+.scene[data-step] .model-layer :is(
+  .nadph-nadp-loop-arrow-right,
+  .atp-adp-loop-arrow-right
+) {
+  animation: none;
+}
+
+@keyframes stepFocusFlash {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(242, 184, 75, 0)); }
+  50% { filter: drop-shadow(0 0 12px rgba(242, 184, 75, .62)); }
+}
+
 @keyframes sunFloatFrames {
   0% { transform: translate(0, 0) rotate(-4deg) scale(1); }
   16% { transform: translate(3px, -5px) rotate(-2deg) scale(1.015); }
@@ -1685,7 +1802,8 @@ dd {
   }
 
   .model-layer {
-    width: min(100%, calc((100dvh - 390px) * 1.7779), 760px);
+    width: min(112vw, max(104vw, calc((100dvh - 390px) * 1.7779)), 900px);
+    max-width: none;
     min-width: 0;
   }
 
@@ -1701,7 +1819,7 @@ dd {
 @supports not (height: 100dvh) {
   @media (max-width: 760px) and (orientation: portrait) {
     .model-layer {
-      width: min(100%, calc((100vh - 390px) * 1.7779), 760px);
+      width: min(112vw, max(104vw, calc((100vh - 390px) * 1.7779)), 900px);
     }
   }
 }

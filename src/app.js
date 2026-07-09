@@ -22,17 +22,6 @@ const steps = [
     text: 'H<sub>2</sub>O 在光反应中被分解，产生 O<sub>2</sub>、H<sup>+</sup> 和 e<sup>-</sup>。'
   },
   {
-    title: 'ATP 的形成',
-    short: 'ATP合成',
-    place: '类囊体薄膜',
-    location: '类囊体薄膜',
-    matter: 'ADP 和 Pi 合成 ATP',
-    energy: '能量储存在 ATP 中',
-    dest: 'ATP 为暗反应提供能量',
-    formula: 'ADP + Pi + 能量 → ATP',
-    text: '光反应把能量用于 ADP 和 Pi 合成 ATP。'
-  },
-  {
     title: 'NADPH 的形成',
     short: 'NADPH合成',
     place: '类囊体薄膜',
@@ -42,6 +31,17 @@ const steps = [
     dest: 'NADPH 用于 C₃ 的还原',
     formula: 'NADP<sup>+</sup> + H<sup>+</sup> + 2e<sup>-</sup> → NADPH',
     text: 'NADP<sup>+</sup> 接收 H<sup>+</sup> 和 e<sup>-</sup>，形成 NADPH。'
+  },
+  {
+    title: 'ATP 的形成',
+    short: 'ATP合成',
+    place: '类囊体薄膜',
+    location: '类囊体薄膜',
+    matter: 'ADP 和 Pi 合成 ATP',
+    energy: '能量储存在 ATP 中',
+    dest: 'ATP 为暗反应提供能量',
+    formula: 'ADP + Pi + 能量 → ATP',
+    text: '光反应把能量用于 ADP 和 Pi 合成 ATP。'
   },
   {
     title: 'CO₂ 的固定',
