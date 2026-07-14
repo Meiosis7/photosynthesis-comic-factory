@@ -29,7 +29,7 @@ const steps = [
     matter: 'NADP⁺ 接收 H⁺ 和 e⁻，形成 NADPH',
     energy: 'NADPH 携带还原力',
     dest: 'NADPH 用于 C₃ 的还原',
-    formula: 'NADP<sup>+</sup> + H<sup>+</sup> + 2e<sup>-</sup> → NADPH',
+    formula: 'NADP<sup>+</sup> + H<sup>+</sup> + e<sup>-</sup> → NADPH',
     text: 'NADP<sup>+</sup> 接收 H<sup>+</sup> 和 e<sup>-</sup>，形成 NADPH。'
   },
   {
@@ -45,7 +45,7 @@ const steps = [
   },
   {
     title: 'CO₂ 的固定',
-    short: 'CO2固定',
+    short: 'CO<sub>2</sub>固定',
     place: '叶绿体基质',
     location: '叶绿体基质',
     matter: 'CO₂ 与 C₅ 结合生成 2C₃',
@@ -56,7 +56,7 @@ const steps = [
   },
   {
     title: 'C₃ 的还原',
-    short: 'C3还原',
+    short: 'C<sub>3</sub>还原',
     place: '叶绿体基质',
     location: '叶绿体基质',
     matter: 'C₃ 利用 ATP 和 NADPH 被还原',
@@ -169,7 +169,7 @@ let lastInfoTrigger = null;
 steps.forEach((step, stepIndex) => {
   const button = document.createElement('button');
   button.type = 'button';
-  button.textContent = step.short;
+  button.innerHTML = step.short;
   button.addEventListener('click', () => setStep(stepIndex));
   stepsEl.append(button);
 });
